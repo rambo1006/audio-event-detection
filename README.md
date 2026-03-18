@@ -1,2 +1,0 @@
-# audio-event-detection
-project 
