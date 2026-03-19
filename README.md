@@ -1,7 +1,7 @@
 # Audio Event Detection Pipeline
 
-Real-time keyword spotting and environmental sound classification 
-using a hardware-constrained ML pipeline. Implements DSP in fixed-point 
+Real-time keyword spotting and environmental sound classification
+using a hardware-constrained ML pipeline. Implements DSP in fixed-point
 arithmetic to simulate FPGA deployment constraints.
 
 ![Mel Spectrograms](results/spectrogram_comparison.png)
@@ -22,7 +22,7 @@ Most ML projects stop at training a model in Python. This project goes further:
 3. Quantization only at final output stage — matching real FPGA guard-bit architecture
 
 ## Project Structure
-
+```
 audio-event-detection/
 ├── dsp/
 │   ├── numpy_mel.py       # FFT + Mel filterbank from scratch
@@ -33,14 +33,16 @@ audio-event-detection/
 │   ├── mel_comparison.png
 │   └── fixed_point_comparison.png
 └── data/                  # Google Speech Commands v2 (not tracked)
+```
 
 ## How to Run
-
+```bash
 git clone https://github.com/rambo1006/audio-event-detection.git
 cd audio-event-detection
-pip install torch torchaudio librosa numpy scipy matplotlib onnxruntime tqdm scikit-learn tensorboard thop
+pip3 install torch torchaudio librosa numpy scipy matplotlib onnxruntime tqdm scikit-learn tensorboard thop
 cd dsp
 python3 visualize.py
+```
 
 ## Datasets
 
