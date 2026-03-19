@@ -60,7 +60,7 @@ def compare_and_plot(audio_path):
     else:
         print("needs debugging - SNR too low")
 
-    # plot side by side
+
     fig, axes = plt.subplots(1, 2, figsize=(12, 4))
     axes[0].imshow(ref, aspect='auto', origin='lower')
     axes[0].set_title('Librosa reference')
