@@ -12,6 +12,9 @@ arithmetic to simulate FPGA deployment constraints.
 |---|---|---|
 | NumPy vs Librosa | 28.9 dB | Custom FFT + Mel filterbank matches reference |
 | Float32 vs Q15 | 95.87 dB | Hardware simulation matches theoretical maximum |
+| CNN val accuracy | 91.9% | 35-class keyword spotting, 84,843 training samples |
+
+![Training Curves](results/training_curves.png)
 
 ## What Makes This Different
 
