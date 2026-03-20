@@ -44,12 +44,18 @@ audio-event-detection/
 ```
 
 ## How to Run
+
+### Run the demo
 ```bash
 git clone https://github.com/rambo1006/audio-event-detection.git
 cd audio-event-detection
 pip3 install torch torchaudio librosa numpy scipy matplotlib onnxruntime tqdm scikit-learn tensorboard thop
-cd dsp
-python3 visualize.py
+python3 demo.py
+```
+
+### Run on your own audio file
+```bash
+python3 demo.py path/to/your/audio.wav
 ```
 
 ## Datasets
@@ -64,6 +70,6 @@ Python · PyTorch · NumPy · librosa · SciPy · ONNX Runtime
 ## Status
 
 - [x] Week 1 — DSP Pipeline (FFT, Mel filterbank, Q15 fixed point)
-- [ ] Week 2 — CNN Training
-- [ ] Week 3 — INT8 Quantization + ONNX benchmarking
-- [ ] Week 4 — Demo + documentation
+- [x] Week 2 — CNN Training (91.9% val accuracy, 90.98% test accuracy)
+- [x] Week 3 — INT8 Quantization (2.7x compression) + ONNX (1.54x speedup)
+- [x] Week 4 — Demo (100% on 6 keywords) + documentation
