@@ -12,11 +12,13 @@ from data.dataset import SpeechCommandsDataset, KEYWORDS
 DATA_PATH = "../data"
 BATCH_SIZE = 64
 EPOCHS = 30
-LR = 1e-3
+LR = 3e-4
 DEVICE = torch.device("cpu")
+NUM_CLASSES = len(KEYWORDS)
+
 
 class SimpleCNN(nn.Module):
-    def __init__(self, num_classes=35):
+    def __init__(self, num_classes=NUM_CLASSES):
         super().__init__()
         self.features = nn.Sequential(
             nn.Conv2d(1, 32, kernel_size=3, padding=1),
@@ -47,6 +49,7 @@ class SimpleCNN(nn.Module):
         x = self.classifier(x)
         return x
 
+
 def train_one_epoch(model, loader, optimizer, criterion):
     model.train()
     total_loss = 0
@@ -64,6 +67,7 @@ def train_one_epoch(model, loader, optimizer, criterion):
         total += labels.size(0)
     return total_loss / len(loader), correct / total
 
+
 def evaluate(model, loader, criterion):
     model.eval()
     total_loss = 0
@@ -79,22 +83,23 @@ def evaluate(model, loader, criterion):
             total += labels.size(0)
     return total_loss / len(loader), correct / total
 
+
 def train():
     print(f"device: {DEVICE}")
     print("loading datasets...")
 
     train_set = SpeechCommandsDataset(DATA_PATH, split='train', augment=False)
-    val_set   = SpeechCommandsDataset(DATA_PATH, split='val', augment=False)
+    val_set   = SpeechCommandsDataset(DATA_PATH, split='val',   augment=False)
 
     train_loader = DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True,  num_workers=0)
     val_loader   = DataLoader(val_set,   batch_size=BATCH_SIZE, shuffle=False, num_workers=0)
 
     torch.manual_seed(42)
-    model     = SimpleCNN(num_classes=len(KEYWORDS)).to(DEVICE)
+    model     = SimpleCNN(num_classes=NUM_CLASSES).to(DEVICE)
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=LR, weight_decay=1e-4)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, mode='max', patience=3, factor=0.5
+        optimizer, mode='max', patience=2, factor=0.5
     )
 
     total_params = sum(p.numel() for p in model.parameters())
@@ -121,12 +126,13 @@ def train():
 
         if val_acc > best_val_acc:
             best_val_acc = val_acc
-            torch.save(model.state_dict(), '../results/best_model.pt')
+            torch.save(model.state_dict(), '../results/best_model_v2.pt')
             print(f"         saved best model — val acc: {val_acc:.3f}")
 
     print(f"\ntraining complete!")
     print(f"best val accuracy: {best_val_acc:.3f} ({best_val_acc*100:.1f}%)")
     save_results(results)
+
 
 def save_results(results):
     import matplotlib.pyplot as plt
@@ -152,8 +158,9 @@ def save_results(results):
     axes[1].legend()
 
     plt.tight_layout()
-    plt.savefig('../results/training_curves.png', dpi=150)
-    print("saved results/training_curves.png")
+    plt.savefig('../results/training_curves_v2.png', dpi=150)
+    print("saved results/training_curves_v2.png")
+
 
 if __name__ == "__main__":
     train()
