@@ -27,10 +27,13 @@ Most ML projects stop at training a model in Python. This project goes three ste
 | INT8 size reduction | 2.7x | 2.52MB → 0.92MB, 0% accuracy drop |
 | ONNX Runtime speedup | 1.54x | 0.62ms → 0.40ms vs PyTorch baseline |
 | Demo accuracy | 100% | 6/6 keywords correctly identified |
+| Most confused pair | go→no (30 cases) | Phonetically similar words |
 
 ![Training Curves](results/training_curves.png)
 
 ![Benchmark](results/benchmark.png)
+
+![Confusion Matrix](results/confusion_matrix.png)
 
 ---
 
